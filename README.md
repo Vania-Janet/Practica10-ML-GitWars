@@ -579,5 +579,8 @@ Practica10-ML-GitWars/
 
 ---
 
-## Licencia
+## MIT License
+
+Copyright (c) 2025 Vania Janet Raya Rios
+
 
