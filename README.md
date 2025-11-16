@@ -19,7 +19,6 @@
 8. [API de Inferencia](#api-de-inferencia)
 9. [Despliegue](#despliegue)
 10. [Resultados y Análisis](#resultados-y-análisis)
-11. [Troubleshooting](#troubleshooting)
 
 ---
 
@@ -979,49 +978,6 @@ echo "All tests passed!"
 
 ---
 
-## Troubleshooting
-
-### Problemas Comunes
-
-#### 1. Docker no inicia
-```bash
-# Verificar puerto disponible
-lsof -i :8000
-
-# Limpiar contenedores previos
-docker container prune -f
-make clean && make build && make run
-```
-
-#### 2. Modelo no carga
-```bash
-# Verificar existencia
-ls -lh model/model.pkl
-
-# Re-entrenar si es necesario
-make train
-```
-
-#### 3. Render deployment falla
-```bash
-# Verificar logs en dashboard de Render
-# Asegurar que model.pkl está en repo
-git lfs track "model/*.pkl"
-git add model/model.pkl
-git commit -m "Add model file"
-git push
-```
-
-#### 4. Predicciones inconsistentes
-```python
-# Verificar preprocesamiento
-from src.utils import preprocess
-X_test = preprocess(raw_features)
-print(X_test)  # Debe coincidir con formato de entrenamiento
-```
-
----
-
 ## Estructura de Archivos Detallada
 
 ```
@@ -1111,57 +1067,5 @@ Practica10-ML-GitWars/
 
 ---
 
-## Contribuidores
-
-**Equipo GitWars**
-
-Roles:
-- Data Engineer: Elemento 0
-- ML Engineer: Elementos 1-3
-- DevOps Engineer: Elemento 4
-- Research Lead: Análisis y documentación
-
----
-
-## Referencias
-
-### Papers
-1. Snoek, J., Larochelle, H., & Adams, R. P. (2012). Practical Bayesian Optimization of Machine Learning Algorithms. NIPS.
-2. Rasmussen, C. E., & Williams, C. K. (2006). Gaussian Processes for Machine Learning. MIT Press.
-
-### Recursos Online
-- [SuperHero API Documentation](https://akabab.github.io/superhero-api)
-- [FastAPI Documentation](https://fastapi.tiangolo.com)
-- [Render Documentation](https://render.com/docs)
-
-### Tutoriales Relacionados
-- [Bayesian Optimization from Scratch](https://krasserm.github.io/2018/03/21/bayesian-optimization/)
-- [Docker for Data Science](https://docker-curriculum.com)
-
----
-
 ## Licencia
 
-Este proyecto es material académico desarrollado para el curso de Machine Learning. 
-
-**Uso permitido:**
-- Estudio personal
-- Referencia educativa
-- Inspiración para proyectos académicos
-
-**Uso no permitido:**
-- Copia literal para entregas académicas
-- Uso comercial sin autorización
-
----
-
-## Contacto y Soporte
-
-Para preguntas sobre este proyecto:
-
-1. Abrir un issue en GitHub
-2. Revisar la sección de Troubleshooting
-3. Consultar los README de cada subdirectorio
-4. Contactar al equipo docente
-
-**Nota:** Este README ha sido diseñado para competir por el premio al Mejor README del Laboratorio, enfatizando claridad, organización, explicación profunda del flujo de trabajo, instrucciones de ejecución detalladas, y un resumen técnico completo de Optimización Bayesiana y los modelos implementados.
