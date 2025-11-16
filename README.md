@@ -13,12 +13,9 @@
 2. [Fundamentos Teóricos](#fundamentos-teóricos)
 3. [Arquitectura del Sistema](#arquitectura-del-sistema)
 4. [Guía de Inicio Rápido](#guía-de-inicio-rápido)
-5. [Flujo de Trabajo Completo](#flujo-de-trabajo-completo)
-6. [Elementos del Proyecto](#elementos-del-proyecto)
-7. [Optimización Bayesiana](#optimización-bayesiana)
-8. [API de Inferencia](#api-de-inferencia)
-9. [Despliegue](#despliegue)
-10. [Resultados y Análisis](#resultados-y-análisis)
+5. [Optimización Bayesiana](#optimización-bayesiana)
+6. [Despliegue](#despliegue)
+7. [Resultados y Análisis](#resultados-y-análisis)
 
 ---
 
