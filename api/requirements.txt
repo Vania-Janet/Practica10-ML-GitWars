@@ -1,0 +1,15 @@
+# API Framework
+fastapi==0.109.0
+uvicorn[standard]==0.27.0
+pydantic==2.5.3
+
+# Machine Learning
+scikit-learn==1.4.0
+numpy==1.26.3
+pandas==2.2.0
+
+# Optimización Bayesiana
+scikit-optimize==0.9.0
+
+# Utilities
+python-multipart==0.0.6
