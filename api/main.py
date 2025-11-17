@@ -182,31 +182,33 @@ async def load_model():
         else:
             logger.error(f"No se encontró el archivo del modelo en {model_path}")
             raise FileNotFoundError(f"model.pkl no encontrado en {model_path}")
-        
+            
+        model_info = {
+            "team_name": "Equipo GitWars",
+            "model_type": "Random Forest",
+            "hyperparameters": {
+                "n_estimators": 100,
+                "max_depth": 8
+            },
+            "preprocessing": "StandardScaler aplicado a todas las características"
+        }
         # Cargar scaler (opcional)
-        if scaler_path.exists():
-            with open(scaler_path, "rb") as f:
-                scaler = pickle.load(f)
-            logger.info(f"Scaler cargado exitosamente desde {scaler_path}")
-        else:
-            logger.warning("No se encontró scaler.pkl, se usarán características sin escalar")
+        #if scaler_path.exists():
+        #    with open(scaler_path, "rb") as f:
+        #        scaler = pickle.load(f)
+        #    logger.info(f"Scaler cargado exitosamente desde {scaler_path}")
+        #else:
+        #    logger.warning("No se encontró scaler.pkl, se usarán características sin escalar")
         
         # Cargar información del modelo (opcional)
-        if info_path.exists():
-            with open(info_path, "rb") as f:
-                model_info = pickle.load(f)
-            logger.info("Información del modelo cargada exitosamente")
-        else:
-            logger.warning("No se encontró model_info.pkl, se usará información por defecto")
-            model_info = {
-                "team_name": "Equipo GitWars",
-                "model_type": "Random Forest",
-                "hyperparameters": {
-                    "n_estimators": 100,
-                    "max_depth": 10
-                },
-                "preprocessing": "StandardScaler aplicado a todas las características"
-            }
+        #if info_path.exists():
+        #    with open(info_path, "rb") as f:
+        #        model_info = pickle.load(f)
+        #    logger.info("Información del modelo cargada exitosamente")
+        #else:
+        #    logger.warning("No se encontró model_info.pkl, se usará información por defecto")
+    
+        
         
     except Exception as e:
         logger.error(f"Error al cargar el modelo: {str(e)}")
@@ -318,4 +320,5 @@ async def root():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
