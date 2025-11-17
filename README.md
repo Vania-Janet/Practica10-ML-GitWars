@@ -91,9 +91,9 @@ La **Optimización Bayesiana (BO)** es un método de optimización secuencial di
                          ▼
 ┌─────────────────────────────────────────────────────────────┐
 │              ELEMENTO 1: Model Orchestrator                 │
-│  • evaluate_svm(C, gamma) → RMSE                            │
-│  • evaluate_rf(n_estimators, max_depth) → RMSE              │
-│  • evaluate_mlp(hidden_layer_sizes, alpha) → RMSE           │
+│  • evaluar_svm(C, gamma) → RMSE                             │
+│  • evaluar_rf(n_estimators, max_depth) → RMSE               │
+│  • evaluar_mlp(hidden_layer_sizes, alpha) → RMSE            │
 └────────────────────────┬────────────────────────────────────┘
                          │
                          ▼
@@ -500,10 +500,16 @@ Practica10-ML-GitWars/
 │
 ├── src/
 │   ├── Elemento0/
-│   │   └── get_data.py         # Script de consumo de API
-│   ├── orchestrator.py         # Evaluadores de modelos
-│   ├── optimizer.py            # Implementación de BO
-│   ├── random_search.py        # Baseline para comparación
+│   │   ├── __init__.py
+│   │   ├── get_data.py         # Script de consumo de API
+│   │   └── validate_data.py    # Validación del dataset
+│   ├── Elemento1/
+│   │   ├── __init__.py
+│   │   └── orchestrator.py     # Evaluadores de modelos
+│   ├── Elemento2/
+│   │   ├── __init__.py
+│   │   ├── optimizer.py        # Implementación de BO
+│   │   └── random_search.py    # Baseline para comparación
 │   ├── utils.py                # Funciones auxiliares
 │   └── README.md              # Documentación de código
 │

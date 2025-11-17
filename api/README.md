@@ -104,10 +104,22 @@ Variables de entorno:
 ```python
 import requests
 
-# Realizar predicción
+# Realizar predicción con datos de superhéroe
+data = {
+    "features": {
+        "intelligence": 60,
+        "strength": 80,
+        "speed": 55,
+        "durability": 70,
+        "combat": 65,
+        "height_cm": 185,
+        "weight_kg": 90
+    }
+}
+
 response = requests.post(
     "http://localhost:8000/predict",
-    json={"features": [1.2, 3.4, 5.6, 7.8]}
+    json=data
 )
 print(response.json())
 ```
@@ -116,7 +128,13 @@ print(response.json())
 # Usando curl
 curl -X POST http://localhost:8000/predict \
   -H "Content-Type: application/json" \
-  -d '{"features": [1.2, 3.4, 5.6, 7.8]}'
+  -d '{
+    "features": {
+      "intelligence": 60, "strength": 80, "speed": 55,
+      "durability": 70, "combat": 65,
+      "height_cm": 185, "weight_kg": 90
+    }
+  }'
 ```
 
 ## Consideraciones

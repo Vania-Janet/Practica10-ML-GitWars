@@ -17,14 +17,36 @@ El dataset debe contener:
 
 ## Generación
 
-El dataset puede ser generado mediante:
-1. Carga de datos externos
-2. Generación sintética
-3. Procesamiento de datos crudos
+El dataset se genera ejecutando el script del Elemento 0:
+
+```bash
+python -m src.Elemento0.get_data
+```
+
+O desde el código:
+
+```python
+from src.Elemento0 import fetch_superhero_data
+
+df = fetch_superhero_data()
+```
+
+Este script:
+1. Consume la SuperHero API (https://akabab.github.io/superhero-api)
+2. Extrae powerstats (intelligence, strength, speed, durability, combat, power)
+3. Convierte altura a cm y peso a kg
+4. Limpia y valida los datos
+5. Genera exactamente 600 registros
 
 ## Formato
 
-Archivo CSV con columnas separadas por comas, incluyendo encabezados descriptivos.
+Archivo CSV con 8 columnas numéricas:
+- `intelligence`, `strength`, `speed`, `durability`, `combat`: Estadísticas de poder
+- `height_cm`: Altura en centímetros
+- `weight_kg`: Peso en kilogramos
+- `power`: Variable objetivo (a predecir)
+
+Todas las columnas son numéricas, sin valores faltantes.
 
 ## Consideraciones
 
