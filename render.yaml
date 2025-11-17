@@ -2,7 +2,7 @@ services:
   - type: web
     name: superhero-power-predictor
     runtime: docker
-    dockerfilePath: ./Dockerfile
+    dockerfilePath: ./deployments/Dockerfile
     dockerContext: .
     plan: free
     region: oregon

@@ -26,12 +26,12 @@ help: ## Muestra esta ayuda
 
 train: ## Entrena el modelo y lo guarda en api/model/
 	@echo "$(YELLOW)Entrenando modelo...$(NC)"
-	python3 api/train_model.py
+	python api/train_model.py
 	@echo "$(GREEN)✓ Modelo entrenado y guardado$(NC)"
 
 verify: ## Verifica que todo está listo para construir
 	@echo "$(YELLOW)Verificando configuración...$(NC)"
-	@python3 api/verify_build.py
+	@python api/verify_build.py
 
 build: verify ## Construye la imagen Docker
 	@echo "$(YELLOW)Construyendo imagen Docker...$(NC)"
@@ -141,14 +141,14 @@ test: ## Ejecuta tests de los endpoints
 		exit 1; \
 	fi
 	@echo "\n$(GREEN)1. Test /health$(NC)"
-	@curl -s http://localhost:$(PORT)/health | python3 -m json.tool
+	@curl -s http://localhost:$(PORT)/health | python -m json.tool
 	@echo "\n$(GREEN)2. Test /info$(NC)"
-	@curl -s http://localhost:$(PORT)/info | python3 -m json.tool
+	@curl -s http://localhost:$(PORT)/info | python -m json.tool
 	@echo "\n$(GREEN)3. Test /predict$(NC)"
 	@curl -s -X POST http://localhost:$(PORT)/predict \
 		-H "Content-Type: application/json" \
 		-d '{"features": {"intelligence": 50, "strength": 80, "speed": 60, "durability": 70, "combat": 55, "height_cm": 185, "weight_kg": 90}}' \
-		| python3 -m json.tool
+		| python -m json.tool
 	@echo "\n$(GREEN)✓ Todos los tests completados$(NC)"
 
 all: train build run test ## Ejecuta todo el flujo: train, build, run, test
@@ -166,14 +166,14 @@ evaluate: ## Simula el flujo EXACTO de evaluación del docente
 	@sleep 5
 	@echo "\n$(YELLOW)Paso 3: Probar endpoints con curl$(NC)"
 	@echo "\n$(GREEN)▶ curl http://localhost:$(PORT)/health$(NC)"
-	@curl -s http://localhost:$(PORT)/health | python3 -m json.tool
+	@curl -s http://localhost:$(PORT)/health | python -m json.tool
 	@echo "\n$(GREEN)▶ curl http://localhost:$(PORT)/info$(NC)"
-	@curl -s http://localhost:$(PORT)/info | python3 -m json.tool
+	@curl -s http://localhost:$(PORT)/info | python -m json.tool
 	@echo "\n$(GREEN)▶ curl POST http://localhost:$(PORT)/predict$(NC)"
 	@curl -s -X POST http://localhost:$(PORT)/predict \
 		-H "Content-Type: application/json" \
 		-d '{"features": {"intelligence": 50, "strength": 80, "speed": 60, "durability": 70, "combat": 55, "height_cm": 185, "weight_kg": 90}}' \
-		| python3 -m json.tool
+		| python -m json.tool
 	@echo "\n$(YELLOW)Paso 4: make stop$(NC)"
 	@$(MAKE) stop
 	@echo "\n$(GREEN)✓ EVALUACIÓN COMPLETADA EXITOSAMENTE$(NC)"

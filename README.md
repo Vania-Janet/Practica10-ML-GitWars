@@ -192,12 +192,46 @@ make verify
 make build
 make run
 
-# Probar API
+# Probar endpoints (Linux/macOS)
 curl http://localhost:8000/health
+# Respuesta: {"status":"ok"}
+
 curl http://localhost:8000/info
+# Respuesta: {"team_name":"Equipo GitWars","model_type":"Random Forest",...}
+
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{"features":{"intelligence":50,"strength":80,"speed":60,"durability":70,"combat":55,"height":"185 cm","weight_kg":90}}'
+# Respuesta: {"prediction":80.64}
 
 # Detener
 make stop
+```
+
+#### PowerShell (Windows)
+
+```powershell
+# Health check
+Invoke-WebRequest -Uri http://localhost:8000/health | Select-Object -ExpandProperty Content
+
+# Información del modelo
+Invoke-WebRequest -Uri http://localhost:8000/info | Select-Object -ExpandProperty Content
+
+# Predicción
+$body = @{
+    features = @{
+        intelligence = 50
+        strength = 80
+        speed = 60
+        durability = 70
+        combat = 55
+        height = "185 cm"
+        weight_kg = 90
+    }
+} | ConvertTo-Json
+
+Invoke-WebRequest -Uri http://localhost:8000/predict -Method POST -Body $body -ContentType "application/json" | Select-Object -ExpandProperty Content
+# Respuesta: {"prediction":80.6379187346699}
 ```
 
 ---

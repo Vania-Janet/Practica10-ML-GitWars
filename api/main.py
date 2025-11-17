@@ -166,53 +166,65 @@ def preprocess_features(features: Features) -> np.ndarray:
 async def load_model():
     """Carga el modelo y preprocesador al iniciar la aplicación."""
     global model, scaler, model_info
-    
+
     try:
         # Rutas a los archivos
         base_path = Path(__file__).parent
         model_path = base_path / "model" / "model.pkl"
-        #scaler_path = base_path / "model" / "scaler.pkl"
-        #info_path = base_path / "model" / "model_info.pkl"
-        
-        # Cargar modelo
-        if model_path.exists():
-            with open(model_path, "rb") as f:
-                model = pickle.load(f)
-            logger.info(f"Modelo cargado exitosamente desde {model_path}")
-        else:
+
+        # Verificar existencia
+        if not model_path.exists():
             logger.error(f"No se encontró el archivo del modelo en {model_path}")
             raise FileNotFoundError(f"model.pkl no encontrado en {model_path}")
-            
-        model_info = {
-            "team_name": "Equipo GitWars",
-            "model_type": "Random Forest",
-            "hyperparameters": {
-                "n_estimators": 100,
-                "max_depth": 8
-            },
-            "preprocessing": "StandardScaler aplicado a todas las características"
-        }
-        # Cargar scaler (opcional)
-        #if scaler_path.exists():
-        #    with open(scaler_path, "rb") as f:
-        #        scaler = pickle.load(f)
-        #    logger.info(f"Scaler cargado exitosamente desde {scaler_path}")
-        #else:
-        #    logger.warning("No se encontró scaler.pkl, se usarán características sin escalar")
-        
-        # Cargar información del modelo (opcional)
-        #if info_path.exists():
-        #    with open(info_path, "rb") as f:
-        #        model_info = pickle.load(f)
-        #    logger.info("Información del modelo cargada exitosamente")
-        #else:
-        #    logger.warning("No se encontró model_info.pkl, se usará información por defecto")
-    
-        
-        
+
+        # Cargar el pickle
+        with open(model_path, "rb") as f:
+            loaded = pickle.load(f)
+
+        # En tu caso, model.pkl es un dict con claves:
+        # ['model', 'model_type', 'best_params', 'rmse', 'feature_names', 'preprocessing']
+        if isinstance(loaded, dict):
+            # 👉 Aquí está el modelo de sklearn (RandomForest, etc.)
+            if "model" not in loaded:
+                raise ValueError(
+                    f"El pickle es un dict pero no contiene la clave 'model'. "
+                    f"Claves disponibles: {list(loaded.keys())}"
+                )
+
+            model = loaded["model"]
+
+            # Si en 'preprocessing' guardaste un scaler/pipeline con .transform
+            preprocessing = loaded.get("preprocessing")
+            if hasattr(preprocessing, "transform"):
+                scaler = preprocessing
+            else:
+                scaler = None
+
+            # Información del modelo para el endpoint /info
+            model_info = {
+                "team_name": "Equipo GitWars",
+                "model_type": loaded.get("model_type", "Modelo sklearn"),
+                "hyperparameters": loaded.get("best_params", {}),
+                "preprocessing": str(loaded.get("preprocessing", "Sin información específica")),
+            }
+
+        else:
+            # Caso alternativo: el pickle ya es directamente un modelo sklearn
+            model = loaded
+            scaler = None
+            model_info = {
+                "team_name": "Equipo GitWars",
+                "model_type": type(loaded).__name__,
+                "hyperparameters": {},
+                "preprocessing": "Sin información específica",
+            }
+
+        logger.info(f"Modelo cargado exitosamente desde {model_path}")
+
     except Exception as e:
         logger.error(f"Error al cargar el modelo: {str(e)}")
         raise
+
 
 
 @app.get("/health")
