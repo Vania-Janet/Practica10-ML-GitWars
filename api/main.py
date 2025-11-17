@@ -169,10 +169,10 @@ async def load_model():
     
     try:
         # Rutas a los archivos
-        base_path = Path(__file__).parent.parent
+        base_path = Path(__file__).parent
         model_path = base_path / "model" / "model.pkl"
-        scaler_path = base_path / "model" / "scaler.pkl"
-        info_path = base_path / "model" / "model_info.pkl"
+        #scaler_path = base_path / "model" / "scaler.pkl"
+        #info_path = base_path / "model" / "model_info.pkl"
         
         # Cargar modelo
         if model_path.exists():
@@ -318,3 +318,4 @@ async def root():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
