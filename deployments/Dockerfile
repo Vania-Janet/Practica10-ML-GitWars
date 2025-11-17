@@ -1,5 +1,5 @@
 # Imagen base de Python
-FROM python:3.11-slim
+FROM python:3.11
 
 # Establecer directorio de trabajo
 WORKDIR /app
@@ -8,7 +8,9 @@ WORKDIR /app
 COPY api/requirements.txt /app/api/requirements.txt
 
 # Instalar dependencias
-RUN pip install --no-cache-dir -r /app/api/requirements.txt
+RUN pip install --no-cache-dir --upgrade pip \
+    && pip install --no-cache-dir -r /app/api/requirements.txt
+
 
 # Copiar todo el proyecto al contenedor
 COPY . /app
@@ -22,12 +24,13 @@ EXPOSE 8000
 # Variables de entorno
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONPATH=/app
-ENV PORT=8000
+ENV PORT=10000
 
+EXPOSE 10000
 # Healthcheck para Docker
 HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
   CMD python -c "import requests; requests.get('http://localhost:${PORT}/health')" || exit 1
 
 # Comando para ejecutar la aplicación
-# Si PORT está definido (Render), usa ese puerto, sino usa 8000
-CMD uvicorn api.main:app --host 0.0.0.0 --port ${PORT:-8000}
+# Si PORT está definido (Render), usa ese puerto
+CMD uvicorn api.main:app --host 0.0.0.0 --port $PORT
