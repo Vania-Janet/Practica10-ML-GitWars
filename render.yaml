@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: superhero-power-predictor
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free
+    region: oregon
+    branch: main
+    healthCheckPath: /health
