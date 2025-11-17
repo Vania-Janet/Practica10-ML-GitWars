@@ -371,7 +371,7 @@ Local Development
        │
        ▼
 ┌──────────────┐
-│   Deployed   │  https://your-app.onrender.com
+│   Deployed   │  https://practica10-ml-gitwars-milanesas.onrender.com/
 └──────────────┘
 ```
 
@@ -470,7 +470,7 @@ services:
 # Script de validación
 #!/bin/bash
 
-BASE_URL="https://your-app.onrender.com"
+BASE_URL="https://practica10-ml-gitwars-milanesas.onrender.com"
 
 echo "Testing health endpoint..."
 curl -f $BASE_URL/health || exit 1
